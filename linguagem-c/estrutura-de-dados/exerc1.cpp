@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct Musica {
     char nome[20];
@@ -12,6 +13,8 @@ struct Musica {
 
 typedef struct Musica Musica;
 
+void listarMusicas();
+
 int main()
 {
     // ALOCAÇÃO NA MEMÓRIA
@@ -21,20 +24,20 @@ int main()
     // FIM ALOCAÇÃO NA MEMÓRIA
     
     // INICIALIZAÇÃO DE MÚSICAS
-    head->nome             = "Sing for the Moment";
-    head->artista          = "Eminem";
+    strcpy(head->nome      , "Sing for the Moment");
+    strcpy(head->artista   , "Eminem");
     head->duracao_da_faixa = 5.43; // 5 minutos e 26 segundos
     head->prox             = segunda;
     head->antr             = terceira;
     
-    segunda->nome             = "King and Lionheart";
-    segunda->banda            = "Of Monsters And Men";
+    strcpy(segunda->nome      , "King and Lionheart");
+    strcpy(segunda->banda     , "Of Monsters And Men");
     segunda->duracao_da_faixa = 4.583; // 4 minutos e 35 segundos
     segunda->prox             = terceira;
     segunda->antr             = head;
     
-    terceira->nome             = "Pra Você Guardei O Amor";
-    terceira->artista          = "Nando Reis";
+    strcpy(terceira->nome      , "Pra Você Guardei O Amor");
+    strcpy(terceira->artista   , "Nando Reis");
     terceira->duracao_da_faixa = 5.716; // 5 minutos e 43 segundos
     terceira->prox             = head;
     terceira->antr             = segunda;
@@ -63,12 +66,23 @@ int main()
         if (decisao == 3)
             break;
         
-        /*if (decisao == 2)
-            listarMusicas*/
+        if (decisao == 2)
+            listarMusicas();
         
         system("clear");
     }
     
     
     return 0;
+}
+
+void listarMusicas() {
+    int i = 1;
+    Musica* elementoVarredura = head;
+    
+    printf("\n\n");
+    do {
+        printf("%d - %s\n", i, elementoVarredura->nome);
+        elementoVarredura = elementoVarredura->prox; 
+    } while (elementoVarredura->prox != head);
 }
