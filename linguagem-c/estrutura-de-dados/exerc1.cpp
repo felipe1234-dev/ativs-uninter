@@ -5,7 +5,7 @@ struct Musica {
     char nome[20];
     char artista[20];
     char banda[20];
-    float duracao_da_faixa; // em minutos
+    float duracao_da_faixa; // unidade em minutos
     struct Musica* prox;
     struct Musica* antr; // anterior
 };
@@ -14,11 +14,13 @@ typedef struct Musica Musica;
 
 int main()
 {
+    // ALOCAÇÃO NA MEMÓRIA
     Musica* head     = (Musica*) malloc(sizeof(Musica));
     Musica* segunda  = (Musica*) malloc(sizeof(Musica));
     Musica* terceira = (Musica*) malloc(sizeof(Musica));
+    // FIM ALOCAÇÃO NA MEMÓRIA
     
-    // INICIALIZAÇÃO DE ALGUMAS MÚSICAS
+    // INICIALIZAÇÃO DE MÚSICAS
     head->nome             = "Sing for the Moment";
     head->artista          = "Eminem";
     head->duracao_da_faixa = 5.43; // 5 minutos e 26 segundos
@@ -36,7 +38,12 @@ int main()
     terceira->duracao_da_faixa = 5.716; // 5 minutos e 43 segundos
     terceira->prox             = head;
     terceira->antr             = segunda;
-    // FIM INICIALIZAÇÃO
+    // FIM INICIALIZAÇÃO DE MÚSICAS
+    
+    // LIBERANDO MEMÓRIA DESNECESSÁRIA 
+    // - somente o head é importante
+    free(segunda);
+    free(terceira);
     
     int decisao;
     
