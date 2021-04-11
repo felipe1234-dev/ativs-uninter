@@ -119,9 +119,26 @@ int main()
             if (pos <= 1) 
                // PASSO 6 (CASO SE ESCOLHA INSERIR NO INÍCIO)
                /*
-                 antrAoHead         head          segundo         terceiro
-                     |               |               |               |
-                     |               |               |               |
+                 ANTES:
+                 antrAoElVrd     novoElemento  elementoVarredura   próximo 
+                     |               |               |               | 
+                     |               |               |               |   
+                 +---+---+       +---+---+       +---+---+       +---+---+ 
+                 | # | #<----------O | #<----------O | #<----------O | # |
+                 | # | O----------># | O----------># | O----------># | # |
+                 +---+---+       +---+---+       +---+---+       +---+---+ 
+                                           _____ 
+                                          |     |
+                                          |     |
+                                       ___|     |___
+                                       \           /
+                                         \       /
+                                           \   /
+                                             V
+                 DEPOIS:
+                 antrAoElVrd        head      elementoVarredura   próximo 
+                     |               |               |               | 
+                     |               |               |               | 
                  +---+---+       +---+---+       +---+---+       +---+---+ 
                  | # | #<----------O | #<----------O | #<----------O | # |
                  | # | O----------># | O----------># | #----------># | # |
