@@ -15,8 +15,7 @@ typedef struct Musica Musica;
 void listarMusicas(Musica *head);
 int contarMusicas(Musica *head, int *tamanho);
 void iniciarInsercao(Musica *head, int *pos, Musica *novoElemento);
-void inserirInicioFinal(Musica *head, Musica *novoElemento);
-void inserirMeio(Musica *head, Musica *novoElemento, int pos);
+void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho);
 
 int main()
 {
@@ -27,7 +26,7 @@ int main()
     // FIM ALOCAÇÃO NA MEMÓRIA
     
     
-    // INICIALIZAÇÃO DE MÚSICAS
+    // INICIALIZAÇÃO DE 3 MÚSICAS (para começar)
     strcpy(head->nome      , "Sing for the Moment");
     strcpy(head->autor     , "Eminem");
     head->duracao_da_faixa = 5.43; // 5 minutos e 26 segundos.
@@ -70,7 +69,7 @@ int main()
         if (decisao == 3)
             break;
             // break quebra o loop e vai direto 
-            // ao return do main onde finaliza 
+            // ao return do main onde se finaliza 
             // o programa.
 
         // "2 - para listar todas as músicas".       
@@ -84,57 +83,53 @@ int main()
             // da lista atual, respectivamente.
             int pos, tamanho;
             
-            // Alocando o novo elemento (a nova música) na memória.
-            Musica* novoElemento = (Musica*) malloc(sizeof(Musica));
-            
             system("clear");
-    
+            
+            // REGRAS DE ESCOLHA DE POSIÇÃO
             contarMusicas(head, &tamanho);
             printf("Sua playlist possui atualmente %d músicas\n\n", tamanho);
             printf("Insira uma posição entre 1 (ou igual a 1) e %d (ou igual a %d)\n", tamanho, tamanho);
             printf("Qualquer número abaixo de 1 será interpretado como inserção no\n");
             printf("início e acima de %d será interpretado como inserção no final\n\n", tamanho);
+            // FIM REGRAS
+            
+            
+            // Alocando o novo elemento (a nova música) na memória.
+            Musica* novoElemento = (Musica*) malloc(sizeof(Musica));
             
             // Inicia os chats de inserção, onde se pergunta dados 
-            // sobre a nova música antes de inserir, assim como a
-            // posição onde o usuário quer inseri-la.
+            // sobre a nova música antes de inserir e grava-os no
+            // novoElemento já alocado, assim como a posição onde 
+            // o usuário quer inseri-lo.
             iniciarInsercao(head, &pos, novoElemento);
             
-            // Conforme explicado pelo texto: 
-            // "Qualquer número abaixo de 1 será interpretado como inserção no
-            // início e acima de %d será interpretado como inserção no final".
-            if ((pos <= 1) || (pos >= tamanho)) {
-               
-                // Este if é verdadeiro para ambos os casos descritos
-                // porque o procedimento para ambos em parte é o mesmo, 
-                // tais procedimentos foram englobados em uma única função.
-                inserirInicioFinal(head, novoElemento);
-                // Isto devve-se ao fato que esta é uma lista dupla-
-                // mente encadeada e circular.
-                // Por conta disso, itens inseridos ao final
-                // e no começo têm os mesmos ponteiros apontando
-                // para as mesmas coisas.
-                
-                // O único ponto diferencial é que itens inseridos 
-                // ao final não poderão ser o head, mas os itens 
-                // inseridos ao início, sim.
-                if (pos <= 1) 
-                    // PASSO 6
-                    /*
-                       antrAoHead        head           segundo         terceiro
-                            |             |               |               |
-                            |             |               |               |
-                        +---+---+       +---+---+       +---+---+       +---+---+ 
-                        | # | #<----------O | #<----------O | #<----------O | # |
-                        | # | O----------># | O----------># | #----------># | # |
-                        +---+---+       +---+---+       +---+---+       +---+---+ 
-                    */
-                    // CÓDIGO: 
-                    head = novoElemento;
-                    // FIM PASSO 6
-            } else {
-                inserirMeio(head, novoElemento, pos);
-            } 
+            // Esta função é capaz de inserir no início, meio e fim.
+            // Fazendo desnecessária a criação de funções específicas
+            // como ministrado nas aulas.
+            inserir(head, novoElemento, pos, tamanho);
+            
+            // Ela apenas não é capaz de alterar o head globalmente,
+            // quando houver inserção no início.
+            
+            // Este if vai verificar se o usuário escolheu inserção
+            // no início e alterará o head globalmente.
+            // Se o valor de pos for menor ou igual a 1, conforme
+            // as regras explicadas, significa que o usuário es-
+            // colheu inserção no início.
+            if (pos <= 1) 
+               // PASSO 6 (CASO SE ESCOLHA INSERIR NO INÍCIO)
+               /*
+                 antrAoHead         head          segundo         terceiro
+                     |               |               |               |
+                     |               |               |               |
+                 +---+---+       +---+---+       +---+---+       +---+---+ 
+                 | # | #<----------O | #<----------O | #<----------O | # |
+                 | # | O----------># | O----------># | #----------># | # |
+                 +---+---+       +---+---+       +---+---+       +---+---+ 
+               */
+               // CÓDIGO: 
+               head = novoElemento;
+               // FIM PASSO 6
         }
         
         system("clear");
@@ -201,148 +196,22 @@ void iniciarInsercao(Musica *head, int *pos, Musica *novoElemento) {
     novoElemento->duracao_da_faixa = faixa;
 }
 
-
-
-void inserirInicioFinal(Musica *head, Musica *novoElemento) {
-    // ESTADO INICIAL
-    /*
-           último           head          segundo 
-               |             |             | 
-               |             |             | 
-           +---+---+       +---+---+       +---+---+ 
-    <-ANTR | # | #<----------O | #<----------O | # |   
-           | # | O----------># | O----------># | # | PROX->
-           +---+---+       +---+---+       +---+---+ 
-    */
-    
-    /*-----------------------------------------------------------------*/
-    
-    // PASSO 1
-    /*
-       antrAoHead        head           segundo 
-            |             |               | 
-            |             |               | 
-        +---+---+       +---+---+       +---+---+ 
-        | # | #<----------O | #<----------O | # |
-        | # | O----------># | O----------># | # |
-        +---+---+       +---+---+       +---+---+ 
-    */    
-    // CÓDIGO:
-    Musica* antrAoHead = head->antr;
-    // FIM PASSO 1
-    
-    /*-----------------------------------------------------------------*/
-    
-    // PASSO 2
-    /*
-       antrAoHead        head           segundo 
-          |               |               | 
-          |               |               | 
-        +---+---+       +---+---+       +---+---+ 
-        | # | #<----------O | #<----------O | # |
-        | # | O------   | # | O----------># | # |
-        +---+---+    |  +---+---+       +---+---+ 
-                     |
-                     |    +---+---+
-                     |    | # | # | _________ novoElemento
-                      -----># | # |
-                          +---+---+ 
-    */
-    // CÓDIGO:
-    antrAoHead->prox = novoElemento;
-    // FIM PASSO 2
-    
-    /*-----------------------------------------------------------------*/
-    
-    // PASSO 3
-    /*
-       antrAoHead                             head           segundo 
-          |                                    |               | 
-          |                                    |               |  
-        +---+---+                            +---+---+       +---+---+ 
-        | # | #<-------------------------------O | #<----------O | # |
-        | # | O--------                -------># | O----------># | # |
-        +---+---+      |              |      +---+---+       +---+---+ 
-                       |   +---+---+  |
-                       |   | # | # |  |
-                        ----># | O----
-                           +---+---+ 
-                              |
-                              |
-                            novoElemento
-    */
-    // CÓDIGO:
-    novoElemento->prox = head;
-    // FIM PASSO 3
-    
-    /*-----------------------------------------------------------------*/
-    
-    // PASSO 4
-    /*
-      antrAoHead                             head           segundo 
-          |                                    |               | 
-          |                                    |               |  
-        +---+---+                            +---+---+       +---+---+ 
-        | # | # |                      --------O | #<----------O | # |
-        | # | O--------               |    ---># | O----------># | # |
-        +---+---+      |              |   |  +---+---+       +---+---+ 
-                       |   +---+---+  |   |
-                       |   | # | #<---    |
-                        ----># | O--------
-                           +---+---+ 
-                              |
-                              |
-                            novoElemento
-    */
-    // CÓDIGO:
-    head->antr = novoElemento;
-    // FIM PASSO 4
-    
-    /*-----------------------------------------------------------------*/
-
-    // PASSO 5
-    /*
-      antrAoHead                             head           segundo 
-          |                                    |               | 
-          |                                    |               |  
-        +---+---+                            +---+---+       +---+---+ 
-        | # | #<-----                  --------O | #<----------O | # |
-        | # | O---   |                |    ---># | O----------># | # |
-        +---+---+ |  |                |   |  +---+---+       +---+---+ 
-                  |  |     +---+---+  |   |
-                  |   -------O | #<---    |
-                   ---------># | O--------
-                           +---+---+ 
-                              |
-                              |
-                            novoElemento
-    */
-    // CÓDIGO:
-    novoElemento->antr = antrAoHead;
-    // FIM PASSO 5
-    
-    /*-----------------------------------------------------------------*/
-    
-    // RESULTADO FINAL
-    /*
-       antrAoHead      novoElemento      head           segundo
-            |             |               |               |
-            |             |               |               |
-        +---+---+       +---+---+       +---+---+       +---+---+ 
-        | # | #<----------O | #<----------O | #<----------O | # |
-        | # | O----------># | O----------># | O----------># | # |
-        +---+---+       +---+---+       +---+---+       +---+---+ 
-    */
-}
-
-void inserirMeio(Musica *head, Musica *novoElemento, int pos) {
+void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
     int i = 1;
     Musica* elementoVarredura = head;
-                
+    
+    // Lembre-se que valores acima do tamanho da lista 
+    // ou abaixos de 1 são considerados, temos que tratar
+    // essas possibilidades para não dar erro no código
+    // posteriormente.
+    pos = (pos > tamanho)? tamanho : (pos < 1)? 1 : pos; 
+    
     do {
+        if (i > pos) 
+            break;
         elementoVarredura = elementoVarredura->prox; 
         i++;
-    } while (i < pos);
+    } while (1);
             
     
     
