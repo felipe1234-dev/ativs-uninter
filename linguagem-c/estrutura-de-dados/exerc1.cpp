@@ -192,25 +192,14 @@ void iniciarInsercao(Musica *head, int *pos, Musica *novoElemento) {
     scanf("%d", pos);
     printf("\n\n");
     
-    // Por questão de praticidade,
-    // char Nome[50] será utilizado pa-
-    // ra abrigar todas as variáveis do
-    // tipo vetor de caracteres deste 
-    // seguimento.
-    char nome[50];
-    
     printf("Nome da música: ");
-    scanf("%s", nome);
-    strcpy(novoElemento->nome, nome);
+    scanf("%s", novoElemento->nome);
     
     printf("Nome da banda/do artista: ");
-    scanf("%s", nome);
-    strcpy(novoElemento->autor, nome);
+    scanf("%s", novoElemento->autor);
     
-    float faixa;
     printf("Duração da faixa (em minutos): ");
-    scanf("%f", &faixa);
-    novoElemento->duracao_da_faixa = faixa;
+    scanf("%f", &novoElemento->duracao_da_faixa);
 }
 
 void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
@@ -224,7 +213,7 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
     pos = (pos > tamanho)? tamanho : (pos < 1)? 1 : pos; 
     
     do {
-        if (i > pos) 
+        if (i >= pos) 
             break;
         elementoVarredura = elementoVarredura->prox; 
         i++;
