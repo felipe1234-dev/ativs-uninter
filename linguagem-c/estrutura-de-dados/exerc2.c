@@ -189,7 +189,7 @@ void inserirAluno(int RU, char nome[], char email[], int *numAlunos, Aluno tabel
     // grama começou a rodar já superou a quantia 
     // de espaço disponível na tabela.
     
-    if (*numAlunos => M) {
+    if (*numAlunos >= M) {
         printf("A tabela está cheia!");
         // return "quebra" a função, nada abaixo 
         // disto será efetuado.
