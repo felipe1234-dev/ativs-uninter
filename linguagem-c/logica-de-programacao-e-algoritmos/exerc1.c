@@ -1,5 +1,6 @@
 //Exercício 1
 #include <stdio.h>
+
 int main() { 
     int p; //dá início à variável p de pedidos 
     int cont; //cont de controle 
