@@ -193,10 +193,10 @@ void iniciarInsercao(Musica *head, int *pos, Musica *novoElemento) {
     printf("\n\n");
     
     printf("Nome da música: ");
-    scanf("%s", novoElemento->nome);
+    scanf(" %[^\n]", novoElemento->nome);
     
     printf("Nome da banda/do artista: ");
-    scanf("%s", novoElemento->autor);
+    scanf(" %[^\n]", novoElemento->autor);
     
     printf("Duração da faixa (em minutos): ");
     scanf("%f", &novoElemento->duracao_da_faixa);
