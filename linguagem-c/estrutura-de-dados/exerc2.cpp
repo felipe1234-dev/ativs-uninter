@@ -47,6 +47,7 @@ int main() {
    
     
     // INÍCIO INSERÇÃO DE 10 CONTATOS
+    // - requisito do exercício.
     // 1.
     char nome[] = {"FELIPE ALVES"}, email[] = {"j.contato.felipe@gmail.com"};
     inserirAluno(3344308, nome, email, &numAlunos, tabelaAlunos);
@@ -89,6 +90,8 @@ int main() {
     // FIM INSERÇÃO
     
     
+    
+    // INÍCIO LOOPING INFINITO
     for (;;) {
         system("clear");
         
@@ -108,6 +111,9 @@ int main() {
         char ch;
         scanf(" %c", &ch);
     }
+    // FIM LOOPING INFINITO
+    
+    
     
     return 0;
 }
