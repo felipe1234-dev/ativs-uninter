@@ -2,19 +2,23 @@
 #include <stdlib.h>
 #include <math.h>
 #include <locale.h>
+
 struct ponto_inicial {
     float x1;
     float y1;
 };
+
 struct ponto_final {
     float x2;
     float y2;
 };
+
 struct ponto2d {
     struct ponto_inicial p0;
     struct ponto_final p1;
     float dist;
 };
+
 struct ponto2d coord;
 /*
 * Eu costumo escrever meus códigos em Inglês
