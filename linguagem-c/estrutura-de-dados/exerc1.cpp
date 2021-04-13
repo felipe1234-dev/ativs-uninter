@@ -120,7 +120,7 @@ int main()
                // PASSO 6 (CASO SE ESCOLHA INSERIR NO INÍCIO)
                /*
                  ANTES:
-                 antrAoElVrd     novoElemento  elementoVarredura   próximo 
+                 antrAoElemVarr novoElemento  elementoVarredura   próximo 
                      |               |               |               | 
                      |               |               |               |   
                  +---+---+       +---+---+       +---+---+       +---+---+ 
@@ -136,7 +136,7 @@ int main()
                                            \   /
                                              V
                  DEPOIS:
-                 antrAoElVrd        head      elementoVarredura   próximo 
+                 antrAoElemVarr     head      elementoVarredura   próximo 
                      |               |               |               | 
                      |               |               |               | 
                  +---+---+       +---+---+       +---+---+       +---+---+ 
@@ -236,7 +236,7 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
     
     // PASSO 1
     /*
-          antrAoElVrd   elementoVarredura   próximo 
+        antrAoElemVarr  elementoVarredura   próximo 
                |               |               | 
                |               |               | 
            +---+---+       +---+---+       +---+---+ 
@@ -245,14 +245,14 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
            +---+---+       +---+---+       +---+---+ 
     */
     // CÓDIGO:
-    Musica* antrAoElVrd = elementoVarredura->antr;
+    Musica* antrAoElemVarr = elementoVarredura->antr;
     // FIM PASSO 1
     
     /*-----------------------------------------------------------------*/
     
     // PASSO 2
     /*
-       antrAoElVrd   elementoVarredura   próximo 
+     antrAoElemVarr  elementoVarredura   próximo 
             |               |               | 
             |               |               | 
         +---+---+       +---+---+       +---+---+ 
@@ -266,14 +266,14 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
                           +---+---+ 
     */
     // CÓDIGO:
-    antrAoElVrd->prox = novoElemento;
+    antrAoElemVarr->prox = novoElemento;
     // FIM PASSO 2
     
     /*-----------------------------------------------------------------*/
     
     // PASSO 3
     /*
-       antrAoElVrd                        elementoVarredura   próximo 
+       antrAoElemVarr                     elementoVarredura   próximo 
             |                                    |               | 
             |                                    |               |  
         +---+---+                            +---+---+       +---+---+ 
@@ -296,7 +296,7 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
     
     // PASSO 4
     /*
-       antrAoElVrd                        elementoVarredura   próximo 
+       antrAoElemVarr                     elementoVarredura   próximo 
             |                                    |               | 
             |                                    |               |   
         +---+---+                            +---+---+       +---+---+ 
@@ -319,7 +319,7 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
     
     // PASSO 5
     /*
-       antrAoElVrd                        elementoVarredura   próximo 
+       antrAoElemVarr                     elementoVarredura   próximo 
             |                                    |               | 
             |                                    |               |   
         +---+---+                            +---+---+       +---+---+ 
@@ -335,14 +335,14 @@ void inserir(Musica *head, Musica *novoElemento, int pos, int tamanho) {
                             novoElemento
     */
     // CÓDIGO:
-    novoElemento->antr = antrAoElVrd;
+    novoElemento->antr = antrAoElemVarr;
     // FIM PASSO 5
     
     /*-----------------------------------------------------------------*/
     
     // RESULTADO FINAL
     /*
-       antrAoElVrd     novoElemento  elementoVarredura   próximo 
+       antrAoElemVarr  novoElemento  elementoVarredura   próximo 
             |               |               |               | 
             |               |               |               |   
         +---+---+       +---+---+       +---+---+       +---+---+ 
